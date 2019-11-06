@@ -191,4 +191,10 @@ bamCoverage -b ~/exampleRnaSeq/analysis/alignments/KO_EB_D2_rep1_Aligned.out.sor
 bamCoverage -b ~/exampleRnaSeq/analysis/alignments/KO_EB_D2_rep2_Aligned.out.sort.bam --outFileName ~/exampleRnaSeq/analysis/bigwigs/KO_EB_D2_rep2.bw --numberOfProcessors 40 --normalizeUsing CPM
 bamCoverage -b ~/exampleRnaSeq/analysis/alignments/KO_EB_D8_rep1_Aligned.out.sort.bam --outFileName ~/exampleRnaSeq/analysis/bigwigs/KO_EB_D8_rep1.bw --numberOfProcessors 40 --normalizeUsing CPM
 bamCoverage -b ~/exampleRnaSeq/analysis/alignments/KO_EB_D8_rep2_Aligned.out.sort.bam --outFileName ~/exampleRnaSeq/analysis/bigwigs/KO_EB_D8_rep2.bw --numberOfProcessors 40 --normalizeUsing CPM
+# Here we use the --normalizeUsing CPM flag to library size normalise the RNA-Seq tracks.
+
+#cleanup by removing the alignment files you likely no longer need 
+rm ~/exampleRnaSeq/analysis/alignments -r
+#-r  tells the program to work recursively so that the directory can be removed
+
 ```
