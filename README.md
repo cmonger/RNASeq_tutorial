@@ -87,6 +87,12 @@ samtools sort -@ 40 ~/exampleRnaSeq/analysis/alignments/KO_EB_D8_rep2_Aligned.ou
 
 #Here we use samtools to sort the bam files. STAR can output sorted BAM files using the command --outSAMtype BAM Sorted however it crashes when using lots of CPU threads to align the data and it is therefore quicker to do the analysis in this way. Here we use -@ 40 to use 40 cpu threads.
 
+#index the BAM files for bigwig generation
+samtools index -@ 40 ~/exampleRnaSeq/analysis/alignments/KO_EB_D2_rep1_Aligned.out.sort.bam
+samtools index -@ 40 ~/exampleRnaSeq/analysis/alignments/KO_EB_D2_rep2_Aligned.out.sort.bam
+samtools index -@ 40 ~/exampleRnaSeq/analysis/alignments/KO_EB_D8_rep1_Aligned.out.sort.bam
+samtools index -@ 40 ~/exampleRnaSeq/analysis/alignments/KO_EB_D8_rep2_Aligned.out.sort.bam
+
 #Remove the non sorted files
 rm ~/exampleRnaSeq/analysis/alignments/*Aligned.out.bam§
 ```
@@ -176,4 +182,13 @@ sig[order(-sig$log2FoldChange),]
 res[c("Gata4","Fgf5","T"),]
 #Here we subset on rownames by supplying a list within []. When doing this you have to remember to include the comma between the rownames you want and the columns, even if you arent specifying columns.
 
+```
+
+## Step 9 - Creating BW files
+``` bash
+mkdir ~/exampleRnaSeq/analysis/bigwigs
+bamCoverage -b ~/exampleRnaSeq/analysis/alignments/KO_EB_D2_rep1_Aligned.out.sort.bam --outFileName ~/exampleRnaSeq/analysis/bigwigs/KO_EB_D2_rep1.bw --numberOfProcessors 40 --normalizeUsing CPM
+bamCoverage -b ~/exampleRnaSeq/analysis/alignments/KO_EB_D2_rep2_Aligned.out.sort.bam --outFileName ~/exampleRnaSeq/analysis/bigwigs/KO_EB_D2_rep2.bw --numberOfProcessors 40 --normalizeUsing CPM
+bamCoverage -b ~/exampleRnaSeq/analysis/alignments/KO_EB_D8_rep1_Aligned.out.sort.bam --outFileName ~/exampleRnaSeq/analysis/bigwigs/KO_EB_D8_rep1.bw --numberOfProcessors 40 --normalizeUsing CPM
+bamCoverage -b ~/exampleRnaSeq/analysis/alignments/KO_EB_D8_rep2_Aligned.out.sort.bam --outFileName ~/exampleRnaSeq/analysis/bigwigs/KO_EB_D8_rep2.bw --numberOfProcessors 40 --normalizeUsing CPM
 ```
